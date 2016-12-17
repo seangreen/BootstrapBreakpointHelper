@@ -2,9 +2,8 @@
 (function(){
 
 	function initBBHBookmarklet() {
-		(window.BBHBookmarklet = function() {
   		
-  		var htmlWindowSize = '<div class="bbh-window-size"><span id="bbh-width">1000</span>px x <span id="bbh-height">2000</span>px</div>';
+  		var htmlWindowSize = '<div id="bbh-window-size" class="bbh-window-size"><span id="bbh-width">1000</span>px x <span id="bbh-height">2000</span>px</div>';
 
       var CSS = '<style>\
         .bootstrap-breakpoint-helper {\
@@ -41,7 +40,7 @@
         }\
       </style>';
       
-			var htmlBS4 = '<div class="bootstrap-breakpoint-helper">\
+			var htmlBS4 = '<div id="bootstrap-breakpoint-helper" class="bootstrap-breakpoint-helper">\
         <div class="hidden-sm-up">\
           <span class="bg" style="background: green;">XS</span>\
           <div class="css-info">\
@@ -112,7 +111,7 @@
         </div>\
       </div>';
       
-      var htmlBS3 = '<div class="bootstrap-breakpoint-helper">\
+      var htmlBS3 = '<div id="bootstrap-breakpoint-helper" class="bootstrap-breakpoint-helper">\
         <div class="visible-xs-block">\
           <span class="bg" style="background: green;">XS</span>\
           <div class="css-info">\
@@ -169,24 +168,25 @@
       });
       
       $(document).ready(function() {
-        $('body').append(CSS);
-        $('body').append(htmlWindowSize);
-        $('#bbh-width').text($(window).width());
-        $('#bbh-height').text($(window).height());
-        if(majorBootstrapVersion < 4) {
-          $('body').append(htmlBS3);
-        } else {
-          $('body').append(htmlBS4);
+        if($('#bbh-window-size').length == 0) { //only append the first time!
+          $('body').append(CSS);
+          $('body').append(htmlWindowSize);
+          $('#bbh-width').text($(window).width());
+          $('#bbh-height').text($(window).height());
+          
+          if(majorBootstrapVersion < 4) {
+            $('body').append(htmlBS3);
+          } else {
+            $('body').append(htmlBS4);
+          }
         }
-        
       });
       
       $(window).resize(function() {
         $('#bbh-width').text($(window).width());
         $('#bbh-height').text($(window).height());      
       });
-      
-		});
+    
 	}
 
 	// the minimum version of jQuery we want
